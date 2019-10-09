@@ -1,0 +1,26 @@
+version: "2.1"
+services:
+  pugchat-state:
+    build: .
+    command: python pugchat-status/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/pugchat-status
+    ports:
+      - "8000:8000"
+    depends_on:
+      pugchat-state-db:
+        condition: service_healthy
+  pugchat-state-db:
+    image: mysql:5.7
+    healthcheck:
+      test: "mysqlcheck -u$$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE"
+      interval: 20s
+      timeout: 5s
+      retries: 15
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: pugchat-state-db
+      MYSQL_USER: pugchat
+      MYSQL_PASSWORD: 2019ii
+    ports:
+      - "3306:3306"
