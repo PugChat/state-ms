@@ -25,7 +25,7 @@ SECRET_KEY = '8(sa8spz*#r#)du_dl7nc4ve(1%552-kwzbl_kk_(+t#mmn8x_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'pugchat_ms_status.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pugchat-state-db',
+        'NAME': 'pugchat-state-db', #On docker
         #'NAME': 'proyecto',
         'USER': 'pugchat', #On docker
         #'USER': 'danielc',
