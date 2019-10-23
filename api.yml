@@ -1,0 +1,188 @@
+#Test with: http://editor.swagger.io/
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice for States services
+  description: Python + MySQL
+  license:
+    name: Software Architecture, 2019-II
+host: localhost:8000
+basePath: /api/States
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /api/States:
+    post:
+      summary: Creates a new state
+      operationId: createState
+      parameters:
+        - name: state
+          in: body
+          required: true
+          description: State Object
+          schema:
+            $ref: '#/definitions/StateInput'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    get:
+      summary: Returns all states
+      operationId: getAllStates
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/StateList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /api/States/{id}:
+    get:
+      summary: Returns an State with the given id
+      operationId: getStateById
+      parameters:
+        - name: id
+          in: path
+          description: The id of the state to be returned
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/State'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    put:
+      summary: Updates an state with the given id
+      operationId: updateState
+      parameters:
+        - name: id
+          in: path
+          description: The id of the state to be updated
+          required: true
+          type: integer
+        - name: state
+          in: body
+          required: true
+          description: State Object
+          schema:
+            $ref: '#/definitions/StateInput'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    delete:
+      summary: Deletes an state with the given id
+      operationId: deleteState
+      parameters:
+        - name: id
+          in: path
+          description: The id of the state to be deleted
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+definitions:
+
+  # State
+  State:
+    type: object
+    properties:
+      id:
+        type: integer
+      id_user:
+        type: integer
+      about:
+        type: string
+      image:
+        type: string
+      created_at:
+        type: string
+        
+
+  StateInput:
+    type: object
+    properties:
+      id:
+        type: string
+      about:
+        type: string
+      image:
+        type: string
+
+
+  StateList:
+    type: object
+    required:
+      - list
+    properties:
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/State'
+
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - detail
+    properties:
+      detail:
+        type: string
