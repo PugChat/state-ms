@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,9 +83,9 @@ DATABASES = {
         #'USER': 'danielc',
         'PASSWORD': '2019ii',
         #'PASSWORD': 'Combino2',
-        'HOST': '172.17.0.1', # On docker
+        'HOST': 'pugchat-state-db', # On docker
         #'HOST': '127.0.0.1',
-        'PORT': '3306',
+        #'PORT': '3306',
     },
 }
 
